@@ -22,7 +22,13 @@ const normalLinkStyle =
 const Sidebar = () => {
   const typedLinks = links as Links[];
   const state = useStateContext();
-  const { activeMenu, setActiveMenu } = state!;
+  const { activeMenu, setActiveMenu, screenSize } = state!;
+
+  const handleCloseSidebar = () => {
+    if (activeMenu && screenSize <= 900) {
+      setActiveMenu(false);
+    }
+  };
 
   return (
     <div className="ml-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
@@ -31,7 +37,7 @@ const Sidebar = () => {
           <div className="flex justify-between items-center">
             <Link
               to="/"
-              onClick={() => {}}
+              onClick={handleCloseSidebar}
               className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900"
             >
               <SiShopware /> <span>Shoppy</span>
@@ -54,7 +60,7 @@ const Sidebar = () => {
                   <NavLink
                     to={`/${link.name}`}
                     key={link.name}
-                    onClick={() => {}}
+                    onClick={handleCloseSidebar}
                     className={({ isActive }) =>
                       isActive ? activeLinkStyle : normalLinkStyle
                     }
